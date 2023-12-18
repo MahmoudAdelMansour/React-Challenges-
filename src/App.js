@@ -1,25 +1,50 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react';
+import {foods, filterItems} from './Components/foods';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default function FilterableList()
+{
+
+
+    return (
+        <>
+            <SearchBar />
+            <hr />
+            <List items={foods}/>
+        </>
+    );
 }
 
-export default App;
+function SearchBar()
+{
+    const [query, setQuery] = useState('');
+    function handleChange(e)
+    {
+        setQuery(e.target.value);
+    }
+    return (
+     <label>
+            Search: {' '}
+            <input type="text" value={query}
+                   onChange={handleChange} />
+     </label>
+    );
+}
+
+function List({items})
+{
+    return (
+        <table>
+            <tbody>
+            {items.map(food => (
+                <tr key={food.id}>
+                    <td>{food.name}</td>
+                    <td>{food.description}</td>
+                </tr>
+            ))}
+            </tbody>
+        </table>
+    );
+}
+
+
+
